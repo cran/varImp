@@ -6,7 +6,7 @@
 \usage{
 varImp(object, mincriterion = 0, conditional = FALSE, threshold = 0.2,
   nperm = 1, OOB = TRUE, pre1.0_0 = conditional,
-  measure = "multiclass.Brier")
+  measure = "multiclass.Brier", ...)
 }
 \arguments{
 \item{object}{an object as returned by cforest.}
@@ -33,6 +33,8 @@ explanatory variables and is more efficient wrt memory consumption and computing
 apply to conditional variable importances.}
 
 \item{measure}{the name of the measure of the 'measures' package that should be used for the variable importance calculation.}
+
+\item{...}{further arguments (like positive or negativ class) that are needed by the measure}
 }
 \value{
 vector with computed permutation importance for each variable
@@ -40,10 +42,13 @@ vector with computed permutation importance for each variable
 \description{
 Computes the variable importance for arbitrary measures from the 'measures' package.
 }
+\details{
+Many measures have not been tested for the usefulness of random forests variable importance. Use at your own risk.
+}
 \examples{
 # multiclass case
 data(iris)
-iris.cf <- cforest(Species ~ ., data = iris, control = cforest_unbiased(mtry = 2, ntree = 50))
+iris.cf = cforest(Species ~ ., data = iris, control = cforest_unbiased(mtry = 2, ntree = 50))
 set.seed(123)
 a = varImp(object = iris.cf, measure = "multiclass.Brier")
 }
